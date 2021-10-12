@@ -16,7 +16,15 @@ class schemC {
         let reltest = /(?<!.)\.\//;
         let absotest = /(?<!.)\w:\//g;
         if (reltest.test(a)) {
-            let data = JSON.parse(fs.readFileSync(a));
+            let tempAddress = module.parent.filename.replace(/\\/g, "/")
+            let adar = tempAddress.split("/")
+            tempAddress = ""
+            for (let i = 0; i < adar.length - 1; i++) {
+                tempAddress = tempAddress + adar[i] + "/"
+            }
+            let data = JSON.parse(fs.readFileSync(tempAddress + a.slice(2)));
+            console.log(fs.readFileSync(tempAddress))
+            return
             let subValue = data.min;
             this.#setDataArray(data.max.x - subValue.x, data.max.y - subValue.y);
             data.cells.forEach(element => {
